@@ -6,7 +6,7 @@ El Objetivo es desplegar Wondpress usando Vagrant y Chef.
 
 ## Supuestos
 
-- Se espera que la red de las VMs sea 192.168.56.0/256. Si VirtualBox tiene otro rango de red entonces hay que ajustar el archivio `.env` con los valores adecuados.
+- Se espera que la red de las VMs sea 192.168.56.0/24. Si VirtualBox tiene otro rango de red entonces hay que ajustar el archivio `.env` con los valores adecuados.
 
 ## Pre-requisitos
 
