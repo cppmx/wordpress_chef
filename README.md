@@ -53,4 +53,4 @@ Si quieres mezclar las versiones puedes hacerlo del siguiente modo.
 
 ## Wordpress
 
-Una vez que se hayan levantado todas las VMs podrás acceder a Wordpress en la página: http://192.168.56.10:8080/
+Una vez que se hayan levantado todas las VMs podrás acceder a Wordpress en la página: http://192.168.56.2/
