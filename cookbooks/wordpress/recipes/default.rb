@@ -1,7 +1,9 @@
 include_recipe 'updates'
 
+db_ip = node['config']['db_ip']
+
 execute "add host" do
-    command "echo '192.168.56.20       db.unir.mx' >> /etc/hosts"
+    command "echo '#{db_ip}       db.unir.mx' >> /etc/hosts"
     action :run
 end
 

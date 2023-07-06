@@ -1,8 +1,8 @@
 <?php
 
 define('DB_NAME', '<%= node['wordpress']['database']['name'] %>');
-define('DB_USER', '<%= node['wordpress']['database']['user'] %>');
-define('DB_PASSWORD', '<%= node['wordpress']['database']['password'] %>');
+define('DB_USER', '<%= node['config']['db_user'] %>');
+define('DB_PASSWORD', '<%= node['config']['db_pswd'] %>');
 define('DB_HOST', '<%= node['wordpress']['database']['host'] %>');
 define('DB_CHARSET', '<%= node['wordpress']['database']['charset'] %>');
 define('DB_COLLATE', '<%= node['wordpress']['database']['collate'] %>');

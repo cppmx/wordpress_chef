@@ -1,5 +1,6 @@
-db_user = node['mysql']['user']
-db_pswd = node['mysql']['password']
+db_user = node['config']['db_user']
+db_pswd = node['config']['db_pswd']
+wp_ip   = node['config']['wp_ip']
 
 # Instalar MySQL server
 package 'mysql-server' do
@@ -20,9 +21,9 @@ end
 
 # Ejecutar comando para crear el usuario y otorgar permisos
 execute 'create_mysql_user' do
-    command "mysql -e \"CREATE USER '#{db_user}'@'192.168.56.10' IDENTIFIED BY '#{db_pswd}'; GRANT ALL PRIVILEGES ON wordpress.* TO '#{db_user}'@'192.168.56.10'; FLUSH PRIVILEGES;\""
+    command "mysql -e \"CREATE USER '#{db_user}'@'#{wp_ip}' IDENTIFIED BY '#{db_pswd}'; GRANT ALL PRIVILEGES ON wordpress.* TO '#{db_user}'@'#{wp_ip}'; FLUSH PRIVILEGES;\""
     action :run
-    not_if "mysql -e \"SELECT User, Host FROM mysql.user WHERE User = '#{db_user}' AND Host = '192.168.56.10'\" | grep #{db_user}"
+    not_if "mysql -e \"SELECT User, Host FROM mysql.user WHERE User = '#{db_user}' AND Host = '#{wp_ip}'\" | grep #{db_user}"
 end
 
 execute 'firewall-cmd --zone=public --add-port=3306/tcp --permanent' do

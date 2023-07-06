@@ -14,6 +14,12 @@ El Objetivo es desplegar Wondpress usando Vagrant y Chef.
 - Necesitas tener instalado Vagrant 2.3.7 o superior
 - Necesitas tener instalado VirtualBox 7.0 o superior
 
+Instala el plugin `vagrant-env` para poder cargar variables ed ambiente desde el archivo `.env`
+
+```bash
+ vagrant plugin install vagrant-env
+```
+
 ## Uso
 
 Para levantar las dos máquinas virtuales con Ubuntu 20.04 ejecuta el comando:
