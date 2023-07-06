@@ -26,10 +26,6 @@ Vagrant.configure("2") do |config|
         sitio.vm.hostname = "wordpress.unir.mx"
         sitio.vm.network "private_network", ip: ENV["WP_IP"]
 
-        sitio.vm.provision :shell, :inline => <<-SCRIPT
-            export WP_IP=#{ENV["WP_IP"]}
-        SCRIPT
-
         sitio.vm.provision "chef_solo" do |chef|
             chef.install = "true"
             chef.arguments = "--chef-license accept"
@@ -39,6 +35,23 @@ Vagrant.configure("2") do |config|
                     "db_ip" => "#{ENV["DB_IP"]}",
                     "db_user" => "#{ENV["DB_USER"]}",
                     "db_pswd" => "#{ENV["DB_PSWD"]}"
+                }
+            }
+        end
+    end
+
+    config.vm.define "proxy" do |proxy|
+        proxy.vm.box = ENV["BOX_NAME"] || "ubuntu/focal64"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
+        proxy.vm.hostname = "wordpress.unir.mx"
+        proxy.vm.network "private_network", ip: ENV["PROXY_IP"]
+
+        proxy.vm.provision "chef_solo" do |chef|
+            chef.install = "true"
+            chef.arguments = "--chef-license accept"
+            chef.add_recipe "proxy"
+            chef.json = {
+                "config" => {
+                    "wp_ip" => "#{ENV["WP_IP"]}"
                 }
             }
         end
