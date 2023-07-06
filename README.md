@@ -20,6 +20,36 @@ Instala el plugin `vagrant-env` para poder cargar variables ed ambiente desde el
  vagrant plugin install vagrant-env
 ```
 
+## Arquitectura
+
+```mermaid
+graph LR;
+    A("proxy
+    192.168.56.2") --> |8080| B("wordpress
+  192.168.56.10") ---> |3306| C[("database
+  192.168.56.20")]
+    C ---> |8080| B
+```
+
+## Configuraciones
+
+En el archivo `.env` se pueden definir algunos valores como las IPs de las máquinas virtuales y el usuario y el password de la BD que se usará para configurar Wordpress.
+
+Antes de levantar Vagrant se puede definir la caja que se usará. Mira el siguiente diagrama:
+
+```mermaid
+graph TB;
+    A[Inicio] --> B{BOX_NAME?}
+    B -->|No| C["Deploy
+    ubuntu/focal64"]
+    B -->|Si| D["Deploy
+    generic/centos8"]
+    C --> E[Fin]
+    D --> E[Fin]
+```
+
+Lee la sección [Uso](#uso) para ver ejemplos de esto.
+
 ## Uso
 
 Para levantar las dos máquinas virtuales con Ubuntu 20.04 ejecuta el comando:
