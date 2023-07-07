@@ -34,16 +34,17 @@ jobs:
       run: |
         vagrant ssh database -c "sudo ss -tlnp | grep LISTEN | grep ':3306'"
         vagrant ssh database -c "sudo mysql -u root -e 'SELECT 1'"
+        vagrant ssh database -c "sudo mysql -u root -e 'SELECT user FROM mysql.user WHERE user = \"wordpress\";'"
 
     - name: Test Wordpress
       run: |
-        vagrant ssh database -c "sudo ss -tlnp | grep LISTEN | grep ':8080'"
-        vagrant ssh wordpress -c "curl http://localhost:8080/"
+        vagrant ssh wordpress -c "sudo ss -tlnp | grep LISTEN | grep ':8080'"
+        test $(vagrant ssh wordpress -c "curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/") -lt 400
 
     - name: Test Proxy
       run: |
-        vagrant ssh database -c "sudo ss -tlnp | grep LISTEN | grep ':80'"
-        vagrant ssh proxy -c "curl http://localhost/'"
+        vagrant ssh proxy -c "sudo ss -tlnp | grep LISTEN | grep ':80'"
+        test $(vagrant ssh wordpress -c "curl -s -o /dev/null -w '%{http_code}' http://localhost/") -lt 400
 
     - name: Tear down VMs
       run: |
