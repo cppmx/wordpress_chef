@@ -73,7 +73,7 @@ jobs:
     - name: Test Proxy on CentOS
       run: |
         vagrant ssh proxy -c "sudo netstat -tlnp | grep LISTEN | grep ':80'"
-        test $(vagrant ssh wordpress -c "curl -s -o /dev/null -w '%{http_code}' http://localhost/") -lt 400
+        test $(vagrant ssh proxy -c "curl -s -o /dev/null -w '%{http_code}' http://localhost/") -lt 400
 
     - name: Tear down CentOS VMs
       run: |
