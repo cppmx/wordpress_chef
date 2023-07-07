@@ -31,13 +31,19 @@ jobs:
         vagrant status
 
     - name: Test MySQL
-      run: vagrant ssh mysql -c "sudo mysql -u root -e 'SELECT 1'"
+      run: |
+        vagrant ssh database -c "sudo ss -tlnp | grep LISTEN | grep ':3306'"
+        vagrant ssh database -c "sudo mysql -u root -e 'SELECT 1'"
 
     - name: Test Wordpress
-      run: vagrant ssh wordpress -c "curl http://localhost:8080/"
+      run: |
+        vagrant ssh database -c "sudo ss -tlnp | grep LISTEN | grep ':8080'"
+        vagrant ssh wordpress -c "curl http://localhost:8080/"
 
     - name: Test Proxy
-      run: vagrant ssh proxy -c "curl http://localhost/'"
+      run: |
+        vagrant ssh database -c "sudo ss -tlnp | grep LISTEN | grep ':80'"
+        vagrant ssh proxy -c "curl http://localhost/'"
 
     - name: Tear down VMs
       run: |
