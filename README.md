@@ -1,6 +1,4 @@
-# Despliegue de Wordpress usando Vagrant y Chef
-
-![Build Status on Master Branch](https://github.com/cppmx/wordpress_chef/actions/workflows/ci.yaml/badge.svg)
+# Despliegue de Wordpress usando Vagrant y Chef ![Build Status on Master Branch](https://github.com/cppmx/wordpress_chef/actions/workflows/ci.yaml/badge.svg)
 
 Este proyecto es para una tarea de la Maestría en Desarrollo y Operaciones de UNIR.
 
