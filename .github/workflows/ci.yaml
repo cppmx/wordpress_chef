@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  vagrant-up:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache Vagrant boxes
+      uses: actions/cache@v2
+      with:
+        path: ~/.vagrant.d/boxes
+        key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+        restore-keys: |
+          ${{ runner.os }}-vagrant-
+
+    - name: Start VMs
+      run: |
+        vagrant up
+
+    - name: Validate VMs
+      run: |
+        vagrant status
+
+    - name: Test MySQL
+      run: vagrant ssh mysql -c "sudo mysql -u root -e 'SELECT 1'"
+
+    - name: Test Wordpress
+      run: vagrant ssh wordpress -c "curl http://localhost:8080/"
+
+    - name: Test Proxy
+      run: vagrant ssh proxy -c "curl http://localhost/'"
+
+    - name: Tear down VMs
+      run: |
+        vagrant destroy -f
