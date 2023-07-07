@@ -1,4 +1,6 @@
-# Despliegue de Wordpress usando Vagrant y Chef ![Build Status on Master Branch](https://github.com/cppmx/wordpress_chef/actions/workflows/ci.yaml/badge.svg)
+# Despliegue de Wordpress usando Vagrant y Chef
+
+- Master ![Build Status on Master Branch](https://github.com/cppmx/wordpress_chef/actions/workflows/ci.yaml/badge.svg)
 
 Este proyecto es para una tarea de la Maestría en Desarrollo y Operaciones de UNIR.
 
@@ -24,11 +26,10 @@ Instala el plugin `vagrant-env` para poder cargar variables ed ambiente desde el
 
 ```mermaid
 graph LR;
-    A("proxy
-    192.168.56.2") --> |8080| B("wordpress
-  192.168.56.10") ---> |3306| C[("database
+    A("Usuario") --> |80| B("proxy
+    192.168.56.2") --> |8080| C("wordpress
+  192.168.56.10") ---> |3306| D[("database
   192.168.56.20")]
-    C ---> |8080| B
 ```
 
 ## Configuraciones
