@@ -23,6 +23,7 @@ jobs:
 
     - name: Start VMs
       run: |
+        vagrant plugin install vagrant-env
         vagrant up
 
     - name: Validate VMs
