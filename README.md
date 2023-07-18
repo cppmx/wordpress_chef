@@ -85,3 +85,33 @@ Si quieres mezclar las versiones puedes hacerlo del siguiente modo.
 ## Wordpress
 
 Una vez que se hayan levantado todas las VMs podrás acceder a Wordpress en la página: http://192.168.56.2/
+
+
+## Unit tests
+
+### Ejecutando las pruebas con Docker
+
+Para probar con Docker hay que usar la imagen `cppmx/chefdk` y montar la carpeta con las pruebas.
+
+Si queremos probar las recetas de la base de datos usaremos el siguiente comando:
+```bash
+ docker run --rm -v $(pwd)/tests/test_database:/cookbooks cppmx/chefdk:latest chef exec rspec --format=documentation
+```
+
+Si queremos probar las recetas de wordpress usaremos el siguiente comando:
+```bash
+ docker run --rm -v $(pwd)/tests/test_wordpress:/cookbooks cppmx/chefdk:latest chef exec rspec --format=documentation
+```
+
+Si queremos probar las recetas del proxy usaremos el siguiente comando:
+```bash
+ docker run --rm -v $(pwd)/tests/test_proxy:/cookbooks cppmx/chefdk:latest chef exec rspec --format=documentation
+```
+### Ejecutando las pruebas con Vagrant
+
+Cambiate al directorio `tests` y ejecuta el script `unit_tests.sh`.
+
+```bash
+ cd tests
+ ./unit_tests.sh
+```
