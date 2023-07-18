@@ -25,4 +25,4 @@ jobs:
     - name: Unit tests
       run: |
         cd tests
-        ./unit_testst.sh
+        ./unit_tests.sh
