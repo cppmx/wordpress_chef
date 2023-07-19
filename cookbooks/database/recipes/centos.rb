@@ -1,6 +1,12 @@
-db_user = node['config']['db_user']
-db_pswd = node['config']['db_pswd']
-wp_ip   = node['config']['wp_ip']
+if node != nil && node['config'] != nil
+    db_user = node['config']['db_user'] || "wordpress"
+    db_pswd = node['config']['db_pswd'] || "wordpress"
+    wp_ip   = node['config']['wp_ip'] || "127.0.0.1"
+else
+    db_user = "wordpress"
+    db_pswd = "wordpress"
+    wp_ip   = "127.0.0.1"
+end
 
 # Instalar MySQL server
 package 'mysql-server' do
