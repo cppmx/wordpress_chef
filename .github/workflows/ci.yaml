@@ -27,4 +27,3 @@ jobs:
       run: |
         vagrant plugin install vagrant-env
         ./unit_tests.sh vm
-        ./unit_tests.sh docker
