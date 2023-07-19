@@ -1,7 +1,6 @@
 directory "/opt/" do
     owner "root"
     group "root"
-    recursive true
 end
 
 execute "get wordpress" do

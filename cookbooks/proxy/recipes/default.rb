@@ -1,5 +1,3 @@
-include_recipe 'updates'
-
 package 'nginx' do
     action :install
 end
@@ -10,12 +8,22 @@ end
 
 case node['platform_family']
 when 'debian', 'ubuntu'
+    execute "update" do
+        command "apt update -y && apt upgrade -y"
+        action :run
+    end
+
     template '/etc/nginx/nginx.conf' do
         source 'ubuntu.conf.erb'
         action :create
         notifies :restart, 'service[nginx]', :immediately
     end
 when 'rhel', 'fedora'
+    execute "update" do
+        command "sudo dnf update -y && sudo dnf upgrade -y"
+        action :run
+    end
+
     template '/etc/nginx/nginx.conf' do
         source 'centos.conf.erb'
         action :create

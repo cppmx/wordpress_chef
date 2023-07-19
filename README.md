@@ -89,29 +89,27 @@ Una vez que se hayan levantado todas las VMs podrás acceder a Wordpress en la p
 
 ## Unit tests
 
-### Ejecutando las pruebas con Docker
+Para ejecutar las pruebas unitarias usa el script `unit_tests.sh` si estás en Linux o Mac.
 
-Para probar con Docker hay que usar la imagen `cppmx/chefdk` y montar la carpeta con las pruebas.
-
-Si queremos probar las recetas de la base de datos usaremos el siguiente comando:
 ```bash
- docker run --rm -v $(pwd)/tests/test_database:/cookbooks cppmx/chefdk:latest chef exec rspec --format=documentation
+./unit_tests.sh
+Seleccione una opción:
+1. Ejecutar pruebas unitarias en una VM
+2. Ejecutar pruebas unitarias en un contenedor
+3. Salir
+Opción: 
 ```
 
-Si queremos probar las recetas de wordpress usaremos el siguiente comando:
-```bash
- docker run --rm -v $(pwd)/tests/test_wordpress:/cookbooks cppmx/chefdk:latest chef exec rspec --format=documentation
-```
+Si seleccionas 1 se ejecutará una VM usando Vagrant y ejecutará las pruebas unitarias.
 
-Si queremos probar las recetas del proxy usaremos el siguiente comando:
-```bash
- docker run --rm -v $(pwd)/tests/test_proxy:/cookbooks cppmx/chefdk:latest chef exec rspec --format=documentation
-```
-### Ejecutando las pruebas con Vagrant
+Si seleccionas 2 se ejecutarán las pruebas unitarias usando Docker.
 
-Cambiate al directorio `tests` y ejecuta el script `unit_tests.sh`.
+También puedes seleccionar una de estos dos opciones desde el script para no pasar por el menú:
 
 ```bash
- cd tests
- ./unit_tests.sh
+# Para ejecutar las pruebas unitarias en una VM.
+./unit_tests.sh vm
+
+# Para ejecutar las pruebas unitarias en Docker.
+./unit_tests.sh docker
 ```

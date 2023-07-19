@@ -6,6 +6,7 @@ on:
     branches:
       - master
       - testing
+      - itg
 
 jobs:
   vagrant-up:
@@ -24,5 +25,5 @@ jobs:
 
     - name: Unit tests
       run: |
-        cd tests
-        ./unit_tests.sh
+        ./unit_tests.sh vm
+        ./unit_tests.sh docker
