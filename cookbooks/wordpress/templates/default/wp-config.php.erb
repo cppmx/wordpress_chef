@@ -1,11 +1,11 @@
 <?php
 
-define('DB_NAME', '<%= node['wordpress']['database']['name'] %>');
-define('DB_USER', '<%= node['config']['db_user'] %>');
-define('DB_PASSWORD', '<%= node['config']['db_pswd'] %>');
-define('DB_HOST', '<%= node['wordpress']['database']['host'] %>');
-define('DB_CHARSET', '<%= node['wordpress']['database']['charset'] %>');
-define('DB_COLLATE', '<%= node['wordpress']['database']['collate'] %>');
+define('DB_NAME', '<%= node['wordpress'].nil? ? "wordpress" : node['wordpress']['database']['name'] %>');
+define('DB_USER', '<%= node['config'].nil? ? "wordpress" : node['config']['db_user'] %>');
+define('DB_PASSWORD', '<%= node['config'].nil? ? "wordpress" : node['config']['db_pswd'] %>');
+define('DB_HOST', '<%= node['wordpress'].nil? ? "127.0.0.1" : node['wordpress']['database']['host'] %>');
+define('DB_CHARSET', '<%= node['wordpress'].nil? ? "utf8" : node['wordpress']['database']['charset'] %>');
+define('DB_COLLATE', '<%= node['wordpress'].nil? ? "utf8_general_ci" : node['wordpress']['database']['collate'] %>');
 
 
 /**

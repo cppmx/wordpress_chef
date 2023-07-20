@@ -9,11 +9,32 @@ on:
       - itg
 
 jobs:
-  vagrant-up:
+  unit-tests:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+
+    - name: Cache Vagrant boxes
+      if: ${{ github.ref == 'refs/heads/testing' }}
+      uses: actions/cache@v2
+      with:
+        path: ~/.vagrant.d/boxes
+        key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+        restore-keys: |
+          ${{ runner.os }}-vagrant-
+
+    - name: Unit tests
+      if: ${{ github.ref == 'refs/heads/testing' }}
+      run: |
+        vagrant plugin install vagrant-env
+        ./tests.sh vm
+
+  itg-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
 
     - name: Cache Vagrant boxes
       uses: actions/cache@v2
@@ -23,7 +44,17 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-vagrant-
 
-    - name: Unit tests
+    - name: Install ChefDK
+      if: ${{ github.ref == 'refs/heads/itg' }}
       run: |
-        vagrant plugin install vagrant-env
-        ./unit_tests.sh vm
+        curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk
+        apt-get install ruby
+        gem install serverspec
+        export CHEF_LICENSE="accept"
+
+    - name: Run Kitchen Test
+      if: ${{ github.ref == 'refs/heads/itg' }}
+      run: |
+        cd cookbooks/database && kitchen test
+        cd cookbooks/wordpress && kitchen test
+        cd cookbooks/proxy && kitchen test

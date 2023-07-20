@@ -28,7 +28,7 @@ http {
                     '"$http_x_forwarded_for" $request_id ';
 
     upstream backend {
-        server <%= node['config']['wp_ip'] %>:8080;
+        server <%= node['config'].nil? ? "127.0.0.1" : node['config']['wp_ip'] %>:8080;
     }
 
     server {

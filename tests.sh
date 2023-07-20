@@ -62,19 +62,38 @@ function unit_tests_on_a_conatiner()
     echo "########## Fin de las pruebas unitarias en Docker ##########"
 }
 
+function itg_tests()
+{
+    local KITCHEN_CMD=$(which kitchen)
+
+    cd $1
+    $KITCHEN_CMD test
+}
+
+function all_itg_tests()
+{
+    local COOKBOOKS=$(pwd)/cookbooks
+
+    itg_tests $COOKBOOKS/database
+    itg_tests $COOKBOOKS/wordpress
+    itg_tests $COOKBOOKS/proxy
+}
+
 function manual()
 {
     # Menú de inicio
     echo "Seleccione una opción:"
     echo "1. Ejecutar pruebas unitarias en una VM"
     echo "2. Ejecutar pruebas unitarias en un contenedor"
-    echo "3. Salir"
+    echo "3. Ejecutar pruebas de integración e infraestructura"
+    echo "4. Salir"
     read -p "Opción: " OPTION
 
     case $OPTION in
         1) unit_tests_on_vm ;;
         2) unit_tests_on_a_conatiner ;;
-        3) echo "Hasta luego :)" && exit 0 ;;
+        2) itg_tests ;;
+        4) echo "Hasta luego :)" && exit 0 ;;
         *) echo "Opción inválida. Saliendo..." ;;
     esac
 }
@@ -85,6 +104,12 @@ elif [[ "$1" == "vm" ]]; then
     unit_tests_on_vm
 elif [[ "$1" == "docker" ]]; then
     unit_tests_on_a_conatiner
+elif [[ "$1" == "database" ]]; then
+    itg_tests $(pwd)/cookbooks/database
+elif [[ "$1" == "wordpress" ]]; then
+    itg_tests $(pwd)/cookbooks/wordpress
+elif [[ "$1" == "proxy" ]]; then
+    itg_tests $(pwd)/cookbooks/proxy
 else
     echo "Opción inválida"
     exit 1
