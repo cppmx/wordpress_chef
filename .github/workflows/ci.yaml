@@ -5,13 +5,36 @@ on:
   push:
     branches:
       - master
+      - testing
+      - itg
 
 jobs:
-  vagrant-up:
+  unit-tests:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+
+    - name: Cache Vagrant boxes
+      if: ${{ github.ref == 'refs/heads/testing' }}
+      uses: actions/cache@v2
+      with:
+        path: ~/.vagrant.d/boxes
+        key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+        restore-keys: |
+          ${{ runner.os }}-vagrant-
+
+    - name: Unit tests
+      if: ${{ github.ref == 'refs/heads/testing' }}
+      run: |
+        vagrant plugin install vagrant-env
+        ./tests.sh vm
+
+  itg-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
 
     - name: Cache Vagrant boxes
       uses: actions/cache@v2
@@ -21,60 +44,17 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-vagrant-
 
-    - name: Start VMs with Ubuntu
+    - name: Install ChefDK
+      if: ${{ github.ref == 'refs/heads/itg1' }}
       run: |
-        vagrant plugin install vagrant-env
-        vagrant up
+        curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk
+        apt-get install ruby
+        gem install serverspec
+        export CHEF_LICENSE="accept"
 
-    - name: Validate Ubuntu VMs
+    - name: Run Kitchen Test
+      if: ${{ github.ref == 'refs/heads/itg1' }}
       run: |
-        vagrant status
-
-    - name: Test MySQL on Ubuntu
-      run: |
-        vagrant ssh database -c "sudo ss -tlnp | grep LISTEN | grep ':3306'"
-        vagrant ssh database -c "sudo mysql -u root -e 'SELECT 1'"
-        vagrant ssh database -c "sudo mysql -u root -e 'SELECT user FROM mysql.user WHERE user = \"wordpress\";'"
-
-    - name: Test Wordpress on Ubuntu
-      run: |
-        vagrant ssh wordpress -c "sudo ss -tlnp | grep LISTEN | grep ':8080'"
-        test $(vagrant ssh wordpress -c "curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/") -lt 400
-
-    - name: Test Proxy on Ubuntu
-      run: |
-        vagrant ssh proxy -c "sudo ss -tlnp | grep LISTEN | grep ':80'"
-        test $(vagrant ssh wordpress -c "curl -s -o /dev/null -w '%{http_code}' http://localhost/") -lt 400
-
-    - name: Tear down Ubuntu VMs
-      run: |
-        vagrant destroy -f
-
-    - name: Start VMs with CentOS
-      run: |
-        vagrant plugin install vagrant-env
-        BOX_NAME="generic/centos8" vagrant up
-
-    - name: Validate CentOS VMs
-      run: |
-        vagrant status
-
-    - name: Test MySQL on CentOS
-      run: |
-        vagrant ssh database -c "sudo netstat -tlnp | grep LISTEN | grep ':3306'"
-        vagrant ssh database -c "sudo mysql -u root -e 'SELECT 1'"
-        vagrant ssh database -c "sudo mysql -u root -e 'SELECT user FROM mysql.user WHERE user = \"wordpress\";'"
-
-    - name: Test Wordpress on CentOS
-      run: |
-        vagrant ssh wordpress -c "sudo netstat -tlnp | grep LISTEN | grep ':8080'"
-        test $(vagrant ssh wordpress -c "curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/") -lt 400
-
-    - name: Test Proxy on CentOS
-      run: |
-        vagrant ssh proxy -c "sudo netstat -tlnp | grep LISTEN | grep ':80'"
-        test $(vagrant ssh proxy -c "curl -s -o /dev/null -w '%{http_code}' http://localhost/") -lt 400
-
-    - name: Tear down CentOS VMs
-      run: |
-        vagrant destroy -f
+        cd cookbooks/database && kitchen test
+        cd cookbooks/wordpress && kitchen test
+        cd cookbooks/proxy && kitchen test

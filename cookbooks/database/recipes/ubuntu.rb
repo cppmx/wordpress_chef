@@ -1,7 +1,14 @@
-db_user = node['config']['db_user']
-db_pswd = node['config']['db_pswd']
-db_ip   = node['config']['db_ip']
-wp_ip   = node['config']['wp_ip']
+if node != nil && node['config'] != nil
+    db_user = node['config']['db_user'] || "wordpress"
+    db_pswd = node['config']['db_pswd'] || "wordpress"
+    db_ip   = node['config']['db_ip'] || "127.0.0.1"
+    wp_ip   = node['config']['wp_ip'] || "127.0.0.1"
+else
+    db_user = "wordpress"
+    db_pswd = "wordpress"
+    db_ip   = "127.0.0.1"
+    wp_ip   = "127.0.0.1"
+end
 
 # Instalar MySQL server
 apt_package 'mysql-server' do
@@ -27,7 +34,7 @@ execute 'create_mysql_user' do
     not_if "mysql -e \"SELECT User, Host FROM mysql.user WHERE User = '#{db_user}' AND Host = '#{wp_ip}'\" | grep #{db_user}"
 end
 
-execute 'Bind to private interface' do
+execute 'bind_service' do
     command "sed -i 's/127.0.0.1/#{db_ip}/g' /etc/mysql/mysql.conf.d/mysqld.cnf"
     action :run
     notifies :restart, 'service[mysql]', :immediately
