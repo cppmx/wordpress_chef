@@ -15,6 +15,7 @@ El Objetivo es desplegar Wondpress usando Vagrant y Chef.
 - Necesitas tener instalado Git
 - Necesitas tener instalado Vagrant 2.3.7 o superior
 - Necesitas tener instalado VirtualBox 7.0 o superior
+- Ruby 2.5 o superior
 
 Instala el plugin `vagrant-env` para poder cargar variables ed ambiente desde el archivo `.env`
 
@@ -25,7 +26,7 @@ Instala el plugin `vagrant-env` para poder cargar variables ed ambiente desde el
 También debes instalar la gema `serverspec` para poder ejecutar las pruebas de integración e infraestructura:
 
 ```bash
-gem install serverspec
+ gem install serverspec
 ```
 
 ## Arquitectura
@@ -106,13 +107,13 @@ Una vez que se hayan levantado todas las VMs podrás acceder a Wordpress en la p
 Para ejecutar las pruebas unitarias usa el script `tests.sh` si estás en Linux o Mac.
 
 ```bash
-./tests.sh
-Seleccione una opción:
-1. Ejecutar pruebas unitarias en una VM
-2. Ejecutar pruebas unitarias en un contenedor
-3. Ejecutar pruebas de integración e infraestructura
-4. Salir
-Opción: 
+ ./tests.sh
+ Seleccione una opción:
+ 1. Ejecutar pruebas unitarias en una VM
+ 2. Ejecutar pruebas unitarias en un contenedor
+ 3. Ejecutar pruebas de integración e infraestructura
+ 4. Salir
+ Opción: 
 ```
 
 Si seleccionas 1 se ejecutará una VM usando Vagrant y ejecutará las pruebas unitarias.
@@ -122,11 +123,11 @@ Si seleccionas 2 se ejecutarán las pruebas unitarias usando Docker.
 También puedes seleccionar una de estos dos opciones desde el script para no pasar por el menú:
 
 ```bash
-# Para ejecutar las pruebas unitarias en una VM.
-./tests.sh vm
+ # Para ejecutar las pruebas unitarias en una VM.
+ ./tests.sh vm
 
-# Para ejecutar las pruebas unitarias en Docker.
-./tests.sh docker
+ # Para ejecutar las pruebas unitarias en Docker.
+ ./tests.sh docker
 ```
 
 ## Pruebas de integración e infraestructura
@@ -134,31 +135,31 @@ También puedes seleccionar una de estos dos opciones desde el script para no pa
 Para ejecutar todas las pruebas de integración usa el script `tests.sh` opción 3:
 
 ```bash
-./tests.sh
-Seleccione una opción:
-1. Ejecutar pruebas unitarias en una VM
-2. Ejecutar pruebas unitarias en un contenedor
-3. Ejecutar pruebas de integración e infraestructura
-4. Salir
-Opción: 
+ ./tests.sh
+ Seleccione una opción:
+ 1. Ejecutar pruebas unitarias en una VM
+ 2. Ejecutar pruebas unitarias en un contenedor
+ 3. Ejecutar pruebas de integración e infraestructura
+ 4. Salir
+ Opción: 
 ```
 
 Si deseas ejecutar una a una las pruebas de integración e infraestructura entonces pásale el nombre de la receta al script `tests.sh`:
 
 ```bash
-# Para ejecutar las pruebas de integración e infraestructura de la base de datos
-./tests.sh database
+ # Para ejecutar las pruebas de integración e infraestructura de la base de datos
+ ./tests.sh database
 
-# Para ejecutar las pruebas de integración e infraestructura de Wordpress
-./tests.sh wordpress
+ # Para ejecutar las pruebas de integración e infraestructura de Wordpress
+ ./tests.sh wordpress
 
 # Para ejecutar las pruebas de integración e infraestructura del proxy
-./tests.sh proxy
+ ./tests.sh proxy
 ```
 
 # Referencias:
 
-Chef Documentation: https://docs.chef.io/
-ChefSpec: https://docs.chef.io/workstation/chefspec/
-ServerSpec: https://serverspec.org/resource_types.html
-Test Kitchen: https://docs.chef.io/workstation/kitchen/
+- Chef Documentation: https://docs.chef.io/
+- ChefSpec: https://docs.chef.io/workstation/chefspec/
+- ServerSpec: https://serverspec.org/resource_types.html
+- Test Kitchen: https://docs.chef.io/workstation/kitchen/
