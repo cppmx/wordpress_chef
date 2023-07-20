@@ -22,7 +22,21 @@ Instala el plugin `vagrant-env` para poder cargar variables ed ambiente desde el
  vagrant plugin install vagrant-env
 ```
 
+También debes instalar la gema `serverspec` para poder ejecutar las pruebas de integración e infraestructura:
+
+```bash
+gem install serverspec
+```
+
 ## Arquitectura
+
+El proyecto se compone de tres servicios, cada uno deployado en una VM individual:
+
+- [database](cookbooks/database/README.md): En esta VM se instala MySQL.
+- [wordpress](cookbooks/wordpress/README.md): En esta VM se instala el servidor web Apache y la aplicación Wordpress es instalada para ser servida por el servidor web.
+- [proxy](cookbooks/proxy/README.md): Em esta VM se instala un proxy Nginx el cual será el punto de entrada a la aplicación.
+
+En el siguiente diagrama se pueden ver cómo se relacionan las VMs y los puertos de comunicación que esa cada una de ellas:
 
 ```mermaid
 graph LR;
@@ -89,14 +103,15 @@ Una vez que se hayan levantado todas las VMs podrás acceder a Wordpress en la p
 
 ## Unit tests
 
-Para ejecutar las pruebas unitarias usa el script `unit_tests.sh` si estás en Linux o Mac.
+Para ejecutar las pruebas unitarias usa el script `tests.sh` si estás en Linux o Mac.
 
 ```bash
-./unit_tests.sh
+./tests.sh
 Seleccione una opción:
 1. Ejecutar pruebas unitarias en una VM
 2. Ejecutar pruebas unitarias en un contenedor
-3. Salir
+3. Ejecutar pruebas de integración e infraestructura
+4. Salir
 Opción: 
 ```
 
@@ -108,8 +123,42 @@ También puedes seleccionar una de estos dos opciones desde el script para no pa
 
 ```bash
 # Para ejecutar las pruebas unitarias en una VM.
-./unit_tests.sh vm
+./tests.sh vm
 
 # Para ejecutar las pruebas unitarias en Docker.
-./unit_tests.sh docker
+./tests.sh docker
 ```
+
+## Pruebas de integración e infraestructura
+
+Para ejecutar todas las pruebas de integración usa el script `tests.sh` opción 3:
+
+```bash
+./tests.sh
+Seleccione una opción:
+1. Ejecutar pruebas unitarias en una VM
+2. Ejecutar pruebas unitarias en un contenedor
+3. Ejecutar pruebas de integración e infraestructura
+4. Salir
+Opción: 
+```
+
+Si deseas ejecutar una a una las pruebas de integración e infraestructura entonces pásale el nombre de la receta al script `tests.sh`:
+
+```bash
+# Para ejecutar las pruebas de integración e infraestructura de la base de datos
+./tests.sh database
+
+# Para ejecutar las pruebas de integración e infraestructura de Wordpress
+./tests.sh wordpress
+
+# Para ejecutar las pruebas de integración e infraestructura del proxy
+./tests.sh proxy
+```
+
+# Referencias:
+
+Chef Documentation: https://docs.chef.io/
+ChefSpec: https://docs.chef.io/workstation/chefspec/
+ServerSpec: https://serverspec.org/resource_types.html
+Test Kitchen: https://docs.chef.io/workstation/kitchen/

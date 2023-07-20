@@ -1,4 +1,3 @@
-# wordpress
+# Servidor web y Wordpress
 
-TODO: Enter the cookbook description here.
-
+Esta receta de Chef instala y configura un servidor web Apache, y también configura Wordpress para ser servido mediante el servidor web.

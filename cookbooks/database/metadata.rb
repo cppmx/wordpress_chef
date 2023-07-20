@@ -1,5 +1,5 @@
 name 'database'
-maintainer 'The Authors'
+maintainer 'Equipo 1001 A'
 maintainer_email 'you@example.com'
 license 'All Rights Reserved'
 description 'Installs/Configures database'

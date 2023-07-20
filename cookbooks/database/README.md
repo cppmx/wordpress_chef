@@ -1,4 +1,4 @@
-# database
+# Base de datos
 
-TODO: Enter the cookbook description here.
+Esta receta de Chef instala y configura MySQL para ser usado por Wordpress.
 
