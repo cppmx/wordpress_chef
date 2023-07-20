@@ -45,7 +45,7 @@ jobs:
           ${{ runner.os }}-vagrant-
 
     - name: Install ChefDK
-      if: ${{ github.ref == 'refs/heads/itg' }}
+      if: ${{ github.ref == 'refs/heads/itg1' }}
       run: |
         curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk
         apt-get install ruby
@@ -53,7 +53,7 @@ jobs:
         export CHEF_LICENSE="accept"
 
     - name: Run Kitchen Test
-      if: ${{ github.ref == 'refs/heads/itg' }}
+      if: ${{ github.ref == 'refs/heads/itg1' }}
       run: |
         cd cookbooks/database && kitchen test
         cd cookbooks/wordpress && kitchen test
