@@ -1,5 +1,5 @@
 if node != nil && node['config'] != nil
-    db_ip = node['config']['dp_ip'] || "127.0.0.1"
+    db_ip = node['config']['db_ip'] || "127.0.0.1"
 else
     db_ip = "127.0.0.1"
 end
@@ -25,3 +25,5 @@ when 'rhel', 'fedora'
     include_recipe 'wordpress::centos_web'    # Instalamos el servidor web
     include_recipe 'wordpress::centos_wp'     # Instalamos wordpress
 end
+
+include_recipe 'wordpress::post_install'
