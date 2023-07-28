@@ -19,9 +19,7 @@ Vagrant.configure("2") do |config|
                 chown -R vagrant:vagrant /opt/chefdk
             SHELL
         end
-    end
-
-    if ENV['TESTS'] == 'false'
+    else
         config.vm.define "database" do |db|
             db.vm.box = ENV["BOX_NAME"] || "ubuntu/focal64"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
             db.vm.hostname = "db.unir.mx"
