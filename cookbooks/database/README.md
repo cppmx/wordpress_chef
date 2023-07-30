@@ -47,7 +47,7 @@ Vamos a necesitar los siguientes valores:
 - La IP de la VM wordpress
 - La IP de la VM de la base de datos (Sólo para Ubuntu)
 
-Estas variables fueron definidas en el archivo *Vagrantfile*, revisa el documento [HOWTO](HOWTO.md) para saber sobre estos valores.
+Estas variables fueron definidas en el archivo *Vagrantfile*, revisa el documento [HOWTO](../../HOWTO.md) para saber sobre estos valores.
 
 Entonces al inicio del archivo `centos.rb`escribiremos lo siguiente:
 

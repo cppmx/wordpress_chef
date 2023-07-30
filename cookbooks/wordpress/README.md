@@ -117,11 +117,11 @@ define('DB_CHARSET', '<%= node['wordpress'].nil? ? "utf8" : node['wordpress']['d
 define('DB_COLLATE', '<%= node['wordpress'].nil? ? "utf8_general_ci" : node['wordpress']['database']['collate'] %>');
 ```
 
-Cuando Chef procese esta plantilla va a sustituir los valores que están en el bloque `<% ... %>` por el contenido de las variables del nodo. Estos valores los definimos cuando creamos el *Vagrantfile*, revisa el documento [HOWTO](HOWTO.md) para saber sobre estas variables y sus valores.
+Cuando Chef procese esta plantilla va a sustituir los valores que están en el bloque `<% ... %>` por el contenido de las variables del nodo. Estos valores los definimos cuando creamos el *Vagrantfile*, revisa el documento [HOWTO](../../HOWTO.md) para saber sobre estas variables y sus valores.
 
 ## Creación de la receta
 
-Para poder configurar wodpress necesitamos saber cuál es la IP de la base de datos, esta variable fue definida en el archivo *Vagrantfile*, revisa el documento [HOWTO](HOWTO.md) para saber sobre esta variable y otros valores.
+Para poder configurar wodpress necesitamos saber cuál es la IP de la base de datos, esta variable fue definida en el archivo *Vagrantfile*, revisa el documento [HOWTO](../../HOWTO.md) para saber sobre esta variable y otros valores.
 
 Vamos a abrir el archivo `recipes/default.rb` y reemplazamos lo que tenga por el siguiente código:
 

@@ -226,4 +226,4 @@ De estas plantillas hay que destacar la siguiente línea:
   server <%= node['config'].nil? ? "127.0.0.1" : node['config']['wp_ip'] %>:8080;
 ```
 
-Esta es la parte donde estamos usando la IP de wordpress, la cual definimos en el *Vagrantfile*, revisa el documento [HOWTO](HOWTO.md) para saber sobre esta variable y otros valores.
+Esta es la parte donde estamos usando la IP de wordpress, la cual definimos en el *Vagrantfile*, revisa el documento [HOWTO](../../HOWTO.md) para saber sobre esta variable y otros valores.
