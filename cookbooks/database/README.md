@@ -29,7 +29,7 @@ when 'rhel', 'fedora'
 end
 ```
 
-Lo que estamos haciendo en este archivo es una toma de decisiones en base al sistema operativo de la máquina virtual. Recordemos que el requerimiento es que esto se ejecute en Ubuntu y en CentOS. Aunque ambos sistemas cuentan con MySQl, hay algunas pequeñas diferencias en su instalación y activación.
+Lo que estamos haciendo en este archivo es una toma de decisiones en base al sistema operativo de la máquina virtual. Recordemos que el requerimiento es que esto se ejecute en Ubuntu y en CentOS. Aunque ambos sistemas cuentan con MySQL, hay algunas pequeñas diferencias en su instalación y activación.
 
 Como podemos observar en el bloque anterior, lo primero que hacemos en cada uno de los sistemas operativos es actualizarlo con su correspondiente administrador de paquetes. Después de eso, cargamos la receta correspondiente a cada sistema operativo.
 
@@ -65,6 +65,7 @@ end
 
 Y al inicio del archivo `ubuntu.rb` escribiremos lo siguiente:
 
+```ruby
 if node != nil && node['config'] != nil
     db_user = node['config']['db_user'] || "wordpress"
     db_pswd = node['config']['db_pswd'] || "wordpress"
@@ -76,6 +77,7 @@ else
     db_ip   = "127.0.0.1"
     wp_ip   = "127.0.0.1"
 end
+```
 
 Los valores que están dentro de `node['config']` sólo existen cuando la VM fue lanzada en modo normal, pero cuando ejecutemos las pruebas de `chef spec` la variable `node` no existirá, pero de todas formas será necesaria tenerla definida para que el resto del script no falle. Por eso estableceremos valores por default para cuando se ejecuten las pruebas.
 
