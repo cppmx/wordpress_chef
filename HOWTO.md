@@ -171,7 +171,7 @@ Como podemos observar en el bloque anterior, cada uno de los directorios de rece
 
 ## Definición de las máquinas virtuales
 
-Antes de iniciar con la creación de las recetas vamos a crear las máquinas virtuales. Las recetas serán cargadas en una máquina virtual y serán ejecutadas, así que necesitaremos tres máquinas virtuales, una para cada una de las recetas. Entonces lo primero que haremos será movernos un directorio atrás, es decir que nos cambiaremos al directorio `/home/user/development/chef/unir/wordpress/` y ahí vamos a crear el archivo *Vagrantfile*.
+Antes de iniciar con la creación de las recetas vamos a crear las máquinas virtuales. Las recetas serán cargadas en una máquina virtual y serán ejecutadas, así que necesitaremos tres máquinas virtuales, una para cada una de las recetas. Entonces lo primero que haremos será movernos un directorio atrás, es decir que nos cambiaremos al directorio `/home/user/development/chef/unir/actividad/` y ahí vamos a crear el archivo *Vagrantfile*.
 
 ```bash
 cookbooks> cd ..
