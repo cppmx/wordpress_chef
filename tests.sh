@@ -92,7 +92,7 @@ function manual()
     case $OPTION in
         1) unit_tests_on_vm ;;
         2) unit_tests_on_a_conatiner ;;
-        2) itg_tests ;;
+        3) all_itg_tests ;;
         4) echo "Hasta luego :)" && exit 0 ;;
         *) echo "Opción inválida. Saliendo..." ;;
     esac
