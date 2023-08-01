@@ -26,4 +26,6 @@ when 'rhel', 'fedora'
     include_recipe 'wordpress::centos_wp'     # Instalamos wordpress
 end
 
-include_recipe 'wordpress::post_install'
+if node != nil && node['config'] != nil
+    include_recipe 'wordpress::post_install'
+end

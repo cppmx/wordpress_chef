@@ -482,3 +482,40 @@ Vagrant.configure("2") do |config|
     end
 end
 ```
+
+Para ejecutar las pruebas hay que estar en la carpeta de cada una de las recetas, por eso, para simplificar las cosas hemos creado un script que permitirá ejecutar las pruebas desde el directorio base.
+
+## Pruebas unitarias
+
+Las pruebas unitarias o pruebas de Chef Spec se pueden ejecutar tanto en una VM como en un contenedor.
+
+Para ejecutar estas pruebas en una VM ejecuta el script `tests.sh` si estás en Linux o Mac o `tests.ps1` si estás en Windows, y selecciona la opción 1.
+Para ejecutar estas pruebas en un contenedor ejecuta el script `tests.sh` si estás en Linux o Mac o `tests.ps1` si estás en Windows, y selecciona la opción 2:
+
+```bash
+actividad> ./tests.sh
+Seleccione una opción:
+1. Ejecutar pruebas unitarias en una VM
+2. Ejecutar pruebas unitarias en un contenedor
+3. Ejecutar pruebas de integración e infraestructura
+4. Salir"
+```
+
+Para ejecutar las pruebas de integración e infraestructura ejecuta el script `tests.sh` si estás en Linux o Mac o `tests.ps1` si estás en Windows, y selecciona la opción 3:
+
+```bash
+actividad> ./tests.sh
+Seleccione una opción:
+1. Ejecutar pruebas unitarias en una VM
+2. Ejecutar pruebas unitarias en un contenedor
+3. Ejecutar pruebas de integración e infraestructura
+4. Salir"
+```
+
+Estas pruebas son muy largas ya que se va a configurar una VM con las mismas características que la VM de producción, y después ejecutará el set de scripts tanto en CentOS como en Ubuntu. Así que este proceso puede ser muy tardado.
+
+Sin embargo, puedes ejecutar un set de pruebas individuales, por ejemplo, para ejecutar sólo las pruebas de database haz lo siguiente:
+
+```bash
+actividad> ./tests.sh database
+```
