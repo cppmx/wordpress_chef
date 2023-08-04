@@ -519,3 +519,5 @@ Sin embargo, puedes ejecutar un set de pruebas individuales, por ejemplo, para e
 ```bash
 actividad> ./tests.sh database
 ```
+
+Puedes ver más información sobre la ejecución de las pruebas en el documento [TESTS](TESTS.md)
